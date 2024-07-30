@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Currency Exchange Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h2>Currency Exchange Tracker</h2>
+        <p>Get details about Currency</p>
+      </div>
+      <div>
+        <form method="post" action="">
+          <div class="form-group">
+            {% csrf_token %}
+            <label for="selected_currency">Select Currency:</label>
+            <select class="form-control" name="selected_currency">
+              {% for currency in currency_list%}
+              <option value="{{currency}}">{{currency}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success">Get Rates</button>
+        </form>
+        <br />
+        <br />
+        {% if currency_exchange_rates_lst %}
+
+        <h3>Currency Exchange Rate for  1{{selected_currency}}</h3>
+        <br />
+        <table class="table table-hover table-bordered table-dark">
+          <tr>
+            <th scope="col">Currency</th>
+            <th scope="col">Exchange Rate</th>
+          </tr>
+          {% for currency in currency_exchange_rates_lst%}
+          <tr>
+            <td class="table-dark">{{currency.currency}}</td>
+            <td class="table-dark">{{currency.exchange_rate_buy}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
